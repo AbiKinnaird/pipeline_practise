@@ -21,8 +21,13 @@ jobs:
 
     - name: Set up Console Project and Add Program.cs
       run: |
-        dotnet new console -o MyConsoleApp                     # Create a new console project in the MyConsoleApp directory.
-        mv pipeline/Program.cs MyConsoleApp/Program.cs         # Move Program.cs from the pipeline folder to MyConsoleApp.
+        # Remove the MyConsoleApp directory if it already exists
+        if (Test-Path -Path MyConsoleApp) { Remove-Item -Recurse -Force MyConsoleApp }
         
+        # Create a new console project in MyConsoleApp directory
+        dotnet new console -o MyConsoleApp
+        # Move Program.cs from the pipeline folder to the new project directory
+        mv pipeline/Program.cs MyConsoleApp/Program.cs
+
     - name: Build and Run Program
       run: dotnet run --project MyConsoleApp
