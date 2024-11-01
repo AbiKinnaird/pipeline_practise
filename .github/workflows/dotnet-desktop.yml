@@ -19,8 +19,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Build and Run Program
+    - name: Set up Console Project and Add Program.cs
       run: |
-        dotnet new console -o MyConsoleApp
-        mv Program.cs MyConsoleApp/Program.cs
-        dotnet run --project MyConsoleApp
+        dotnet new console -o MyConsoleApp                     # Create a new console project in the MyConsoleApp directory.
+        mv pipeline/Program.cs MyConsoleApp/Program.cs         # Move Program.cs from the pipeline folder to MyConsoleApp.
+        
+    - name: Build and Run Program
+      run: dotnet run --project MyConsoleApp
